@@ -1,7 +1,7 @@
 //@req(nodeGroup, name, port)
 
 var APPID = getParam("TARGET_APPID"),
-    SESSION = getParam("session"),
+    //SESSION = getParam("session"),
     PROTOCOL = getParam("protocol", "TCP"),
     oEnvService,
     oEnvInfo,
@@ -21,7 +21,7 @@ oScripting =  hivext.local.exp.wrapRequest(new Scripting({
 */
 
 
-oEnvInfo = jelastic.env.constrol.GetEnvInfo();
+oEnvInfo = jelastic.env.control.GetEnvInfo(APPID, session);
 
 if (!oEnvInfo.isOK()) {
     return oEnvInfo;
