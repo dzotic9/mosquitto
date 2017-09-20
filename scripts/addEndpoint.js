@@ -60,9 +60,9 @@ if (bEndPointsEnabled) {
         }
     }
     
-    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either <i>" + oResp.object.publicPort + "</i> port (for external access from wherever in the Internet) or <i>1883</i> port (for connecting within internal Plaform network)"
+    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either <i>" + oResp.object.publicPort + "</i> port (for external access from wherever in the Internet) or <i>1883</i> port (for connecting within internal Plaform network)."
 } else {
-    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through <i>1883</i> port (for connecting within internal Plaform network)<br>Jelastic Endpoints are limited by your quotas. So external access from wherever in the Internet is denied. Please contact to support or upgrade account to increase this possibility";
+    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through <i>1883</i> port (for connecting within internal Plaform network).<br>Jelastic Endpoints are limited by your quotas. So external access from wherever in the Internet is denied. Please contact to support or upgrade account to increase this possibility.";
 }
 
 return oScripting.eval({
