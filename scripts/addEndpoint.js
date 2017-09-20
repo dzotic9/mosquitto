@@ -22,7 +22,7 @@ oScripting =  hivext.local.exp.wrapRequest(new Scripting({
     session : SESSION
 }));
 
-return oGroupQoutaService.groupQuota();
+return oGroupQoutaService.getQuotas();
 
 
 oEnvInfo = oEnvService.getEnvInfo();
