@@ -31,7 +31,7 @@ if (!oResp.isOK()) {
 }
 
 bEndPointsEnabled = toNative(oResp).array[0].value;
-return bEndPointsEnabled + 89;
+return 7 + bEndPointsEnabled + 7;
 
 oEnvInfo = oEnvService.getEnvInfo();
 
