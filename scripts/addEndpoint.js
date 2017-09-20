@@ -52,4 +52,4 @@ var jps = {
     }
 };
 
-return jelastic.development.scripting.Eval(APPID, session, "InstallApp", toJSON(jps));
+return jelastic.development.scripting.Eval(appid, session, "InstallApp", {manifest : jps, targetAppid: APPID});
