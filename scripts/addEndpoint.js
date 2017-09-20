@@ -1,6 +1,6 @@
 //@req(nodeGroup, name, port)
 
-import com.hivext.api.billing.GroupQuota;
+import com.hivext.api.billing.Account;
 import com.hivext.api.environment.Environment;
 import com.hivext.api.development.Scripting;
 
