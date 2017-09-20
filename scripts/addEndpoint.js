@@ -41,17 +41,13 @@ for (i = 0; i < nNodesCount; i += 1) {
     }
 }
 
-return jelastic.development.scripting.Eval({
-    script : "InstallApp",
-    targetAppid : APPID,
-    manifest : toJSON({
-        "jpsType" : "update",
-        "application" : {
-            "id": "Mosquitto",
-            "name": "Mosquitto",
-            "success": {
-                "email": "To access your Mosquitto MQTT server, refer to the **${env.domain}** domain name through either *" + oResp.object.publicPort + "* port (for external access from wherever in the Internet) or *1883* port (for connecting within internal Plaform network)"
-            }
+return jelastic.development.scripting.Eval(APPID, session, "InstallApp", toJSON({
+    "jpsType" : "update",
+    "application" : {
+        "id": "Mosquitto",
+        "name": "Mosquitto",
+        "success": {
+            "email": "To access your Mosquitto MQTT server, refer to the **${env.domain}** domain name through either *" + oResp.object.publicPort + "* port (for external access from wherever in the Internet) or *1883* port (for connecting within internal Plaform network)"
         }
-    })
-});
+    }
+}));
