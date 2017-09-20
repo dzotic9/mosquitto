@@ -22,7 +22,7 @@ oScripting =  hivext.local.exp.wrapRequest(new Scripting({
     session : SESSION
 }));
 
-return 1+ oAccountQoutaService.getQuotas({
+return 2 + oAccountQoutaService.getQuotas({
     quotasnames: "environment.endpoint.enabled"
 });
 
