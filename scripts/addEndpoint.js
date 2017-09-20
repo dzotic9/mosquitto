@@ -32,7 +32,7 @@ nNodesCount = oEnvInfo.nodes.length;
 
 for (i = 0; i < nNodesCount; i += 1) {
     if (oEnvInfo.nodes[i].nodeGroup == nodeGroup) {
-        oResp = jelastic.env.constrol..AddEndpoint({
+        oResp = jelastic.env.control.AddEndpoint({
             name: name,
             nodeid: oEnvInfo.nodes[i].id,
             privatePort: port,
