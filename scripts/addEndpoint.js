@@ -60,7 +60,7 @@ return oScripting.eval({
             "id": "Mosquitto",
             "name": "Mosquitto",
             "success": {
-                "email": "To access your Mosquitto MQTT server, refer to the **${env.domain}** domain name through either *" + oResp.object.publicPort + "* port (for external access from wherever in the Internet) or *1883* port (for connecting within internal Plaform network)"
+                "email": "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either *" + oResp.object.publicPort + "* port (for external access from wherever in the Internet) or *1883* port (for connecting within internal Plaform network)"
             }
         }
     })
