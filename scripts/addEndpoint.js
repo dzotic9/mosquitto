@@ -7,11 +7,12 @@ import com.hivext.api.development.Scripting;
 var APPID = getParam("TARGET_APPID"),
     SESSION = getParam("session"),
     PROTOCOL = getParam("protocol", "TCP"),
+    sSuccessText = "",
+    bEndPointsEnabled,
     oEnvService,
-    oEnvInfo,
     nNodesCount,
     oScripting,
-    bEndPointsEnabled,
+    oEnvInfo,
     oResp,
     i;
 
@@ -26,15 +27,11 @@ oResp = oAccountQoutaService.getQuotas({
     quotasnames: "environment.endpoint.enabled"
 });
 
-bEndPointsEnabled = toNative(oResp).array[0].value;
-return 'io' + bEndPointsEnabled;
-
 if (!oResp.isOK()) {
     return oResp;
 }
 
 bEndPointsEnabled = toNative(oResp).array[0].value;
-return 7 + bEndPointsEnabled + 7;
 
 oEnvInfo = oEnvService.getEnvInfo();
 
@@ -46,20 +43,26 @@ oEnvInfo = toNative(oEnvInfo);
 
 nNodesCount = oEnvInfo.nodes.length;
 
-for (i = 0; i < nNodesCount; i += 1) {
-    if (oEnvInfo.nodes[i].nodeGroup == nodeGroup) {
-        oResp = oEnvService.addEndpoint({
-            name: name,
-            nodeid: oEnvInfo.nodes[i].id,
-            privatePort: port,
-            protocol: PROTOCOL
-        });
+if (bEndPointsEnabled) {
+    for (i = 0; i < nNodesCount; i += 1) {
+        if (oEnvInfo.nodes[i].nodeGroup == nodeGroup) {
+            oResp = oEnvService.addEndpoint({
+                name: name,
+                nodeid: oEnvInfo.nodes[i].id,
+                privatePort: port,
+                protocol: PROTOCOL
+            });
 
-        if (!oResp.isOK()) {
-            return oResp;
+            if (!oResp.isOK()) {
+                return oResp;
+            }
+            oResp = toNative(oResp);
         }
-        oResp = toNative(oResp);
     }
+    
+    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either <i>" + oResp.object.publicPort + "</i> port (for external access from wherever in the Internet) or *1883* port (for connecting within internal Plaform network)"
+} else {
+    sSuccessText = " Jelastic Endpoints are limited by your quotas. Please contact to support or upgrade account to increase this possibility";
 }
 
 return oScripting.eval({
@@ -71,7 +74,7 @@ return oScripting.eval({
             "id": "Mosquitto",
             "name": "Mosquitto",
             "success": {
-                "email": "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either *" + oResp.object.publicPort + "* port (for external access from wherever in the Internet) or *1883* port (for connecting within internal Plaform network)"
+                "email": sSuccessText
             }
         }
     })
