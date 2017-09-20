@@ -16,7 +16,7 @@ var APPID = getParam("TARGET_APPID"),
     i;
 
 oEnvService = hivext.local.exp.wrapRequest(new Environment(APPID, SESSION));
-oGroupQoutaService = hivext.local.exp.wrapRequest(new GroupQouta(APPID, SESSION));
+oGroupQoutaService = hivext.local.exp.wrapRequest(new GroupQuota(APPID, SESSION));
 oScripting =  hivext.local.exp.wrapRequest(new Scripting({
     serverUrl : "http://" + window.location.host.replace("app", "appstore") + "/",
     session : SESSION
