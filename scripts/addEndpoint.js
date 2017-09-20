@@ -20,7 +20,7 @@ oScripting =  hivext.local.exp.wrapRequest(new Scripting({
 
 */
 
-
+return jelastic.env.control;
 oEnvInfo = jelastic.env.control.GetEnvInfo(APPID, session);
 
 if (!oEnvInfo.isOK()) {
