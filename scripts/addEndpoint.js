@@ -26,6 +26,9 @@ oResp = oAccountQoutaService.getQuotas({
     quotasnames: "environment.endpoint.enabled"
 });
 
+bEndPointsEnabled = toNative(oResp).array[0].value;
+return 7 + bEndPointsEnabled + 6;
+
 if (!oResp.isOK()) {
     return oResp;
 }
