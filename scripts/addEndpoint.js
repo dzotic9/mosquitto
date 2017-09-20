@@ -2,7 +2,7 @@
 
 import com.hivext.api.environment.Environment;
 import com.hivext.api.development.Scripting;
-import com.hivext.api.billing.GroupQuota;
+import com.hivext.api.Billing.GroupQuota;
 
 var APPID = getParam("TARGET_APPID"),
     SESSION = getParam("session"),
