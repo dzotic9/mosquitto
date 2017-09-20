@@ -27,7 +27,7 @@ oResp = oAccountQoutaService.getQuotas({
 });
 
 bEndPointsEnabled = toNative(oResp).array[0].value;
-return 7 + bEndPointsEnabled + 6;
+return 'io' + bEndPointsEnabled;
 
 if (!oResp.isOK()) {
     return oResp;
