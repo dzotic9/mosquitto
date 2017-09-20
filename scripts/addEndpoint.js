@@ -16,13 +16,15 @@ var APPID = getParam("TARGET_APPID"),
     i;
 
 oEnvService = hivext.local.exp.wrapRequest(new Environment(APPID, SESSION));
-oGroupQoutaService = hivext.local.exp.wrapRequest(new GroupQuota(APPID, SESSION));
+oAccountQoutaService = hivext.local.exp.wrapRequest(new Account(APPID, SESSION));
 oScripting =  hivext.local.exp.wrapRequest(new Scripting({
     serverUrl : "http://" + window.location.host.replace("app", "appstore") + "/",
     session : SESSION
 }));
 
-return oGroupQoutaService.getQuotas();
+return oAccountQoutaService.getQuotas({
+    quotasnames: "environment.endpoint.enabled"
+});
 
 
 oEnvInfo = oEnvService.getEnvInfo();
