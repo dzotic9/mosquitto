@@ -32,7 +32,7 @@ nNodesCount = oEnvInfo.nodes.length;
 
 for (i = 0; i < nNodesCount; i += 1) {
     if (oEnvInfo.nodes[i].nodeGroup == nodeGroup) {
-        oResp = jelastic.env.control.AddEndpoint(APPID, session, name, oEnvInfo.nodes[i].id, port, PROTOCOL);
+        oResp = jelastic.env.control.AddEndpoint(APPID, session, oEnvInfo.nodes[i].id, port, PROTOCOL, name);
 
         if (!oResp || oResp.result != 0) {
             return oResp;
@@ -48,7 +48,8 @@ return jelastic.development.scripting.Eval({
         "jpsType" : "update",
         "application" : {
             "id": "Mosquitto",
-            "name": "Mosquitto",
+            "
+            ": "Mosquitto",
             "success": {
                 "email": "To access your Mosquitto MQTT server, refer to the **${env.domain}** domain name through either *" + oResp.object.publicPort + "* port (for external access from wherever in the Internet) or *1883* port (for connecting within internal Plaform network)"
             }
