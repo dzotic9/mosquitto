@@ -22,7 +22,7 @@ oScripting =  hivext.local.exp.wrapRequest(new Scripting({
 
 oEnvInfo = jelastic.env.control.GetEnvInfo(APPID, session);
 
-if (!oEnvInfo.isOK()) {
+if (!oEnvInfo || oEnvInfo.result != 0) {
     return oEnvInfo;
 }
 
@@ -39,10 +39,10 @@ for (i = 0; i < nNodesCount; i += 1) {
             protocol: PROTOCOL
         });
 
-        if (!oResp.isOK()) {
+        if (!oResp || oResp.result != 0) {
             return oResp;
         }
-        oResp = toNative(oResp);
+        //oResp = toNative(oResp);
     }
 }
 
