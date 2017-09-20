@@ -22,10 +22,16 @@ oScripting =  hivext.local.exp.wrapRequest(new Scripting({
     session : SESSION
 }));
 
-return 2 + oAccountQoutaService.getQuotas({
+oResp = oAccountQoutaService.getQuotas({
     quotasnames: "environment.endpoint.enabled"
 });
 
+if (!oResp.isOK()) {
+    return oResp;
+}
+
+bEndPointsEnabled = toNative(oResp).array[0].value;
+return bEndPointsEnabled + 89;
 
 oEnvInfo = oEnvService.getEnvInfo();
 
