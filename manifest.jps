@@ -1,6 +1,6 @@
 {
   "jpsType": "install",
-  "jpsVersion": "0.99",
+  "jpsVersion": "1.2",
   "id": "mosquitto-dev",
   "name": "Eclipse Mosquitto",
   "logo": "https://github.com/jelastic-jps/mosquitto/raw/master/images/mosquitto-logo.png",
