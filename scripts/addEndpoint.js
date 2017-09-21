@@ -39,7 +39,7 @@ if (bEndPointsEnabled) {
 
     sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either<ul><li> <i>" + oResp.object.publicPort + "</i> port (for external access from wherever in the Internet)</li><li> or <i>1883</i> port (for connecting within Plaform internal network, i.e. from another Jelastic container).</li></ul>";
 } else {
-    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through <i>1883</i> port (for connecting within Plaform internal network, i.e. from another Jelastic container).<br><br>Jelastic Endpoints are limited by your quotas. So external access from wherever in the Internet is denied. Please contact to support or upgrade account to increase this possibility. <br><br>After that add Endpoints to your environment. More info <a href=\'https://docs.jelastic.com//endpoints\'>here</a>";
+    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>tcp://${env.domain}: 1883</b> (for connecting within Plaform internal network, i.e. from another Jelastic container).<br><br>Jelastic Endpoints are limited by your quotas. So external access from wherever in the Internet is denied. Please contact to support or upgrade account to increase this possibility. <br><br>After that add Endpoints to your environment on your compute node. More details how to add endpoints are <a href=\'https://docs.jelastic.com/endpoints\'>here.</a>";
 }
 
 return {
