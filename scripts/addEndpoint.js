@@ -1,91 +1,49 @@
 //@req(nodeGroup, name, port)
 
-import com.hivext.api.billing.Account;
-import com.hivext.api.environment.Environment;
-import com.hivext.api.development.Scripting;
-
-var APPID = getParam("TARGET_APPID"),
+var PROTOCOL = getParam("protocol", "TCP"),
+    APPID = getParam("TARGET_APPID"),
     SESSION = getParam("session"),
-    PROTOCOL = getParam("protocol", "TCP"),
-    sSuccessText = "",
     bEndPointsEnabled,
-    oEnvService,
+    sSuccessText = "",
     nNodesCount,
-    oScripting,
     oEnvInfo,
     oResp,
     i;
 
-oEnvService = hivext.local.exp.wrapRequest(new Environment(APPID, SESSION));
-oAccountQoutaService = hivext.local.exp.wrapRequest(new Account(appid, SESSION));
-oScripting =  hivext.local.exp.wrapRequest(new Scripting({
-    serverUrl : "http://" + window.location.host.replace("app", "appstore") + "/",
-    session : SESSION
-}));
+oResp = jelastic.billing.account.GetQuotas("environment.endpoint.enabled");
 
-oResp = oAccountQoutaService.getQuotas({
-    quotasnames: "environment.endpoint.enabled"
-});
-
-if (!oResp.isOK()) {
+if (!oResp || oResp.result != 0) {
     return oResp;
 }
 
-bEndPointsEnabled = toNative(oResp).array[0].value;
+bEndPointsEnabled = oResp.array[0].value;
 
-oEnvInfo = oEnvService.getEnvInfo();
+oEnvInfo = jelastic.environment.environment.GetEnvInfo(APPID, session);
 
-if (!oEnvInfo.isOK()) {
+if (!oEnvInfo || oEnvInfo.result != 0) {
     return oEnvInfo;
 }
-
-oEnvInfo = toNative(oEnvInfo);
 
 nNodesCount = oEnvInfo.nodes.length;
 
 if (bEndPointsEnabled) {
     for (i = 0; i < nNodesCount; i += 1) {
         if (oEnvInfo.nodes[i].nodeGroup == nodeGroup) {
-            oResp = oEnvService.addEndpoint({
-                name: name,
-                nodeid: oEnvInfo.nodes[i].id,
-                privatePort: port,
-                protocol: PROTOCOL
-            });
+            oResp = jelastic.environment.environment.AddEndpoint(APPID, session, oEnvInfo.nodes[i].id, port, PROTOCOL, name);
 
-            if (!oResp.isOK()) {
+            if (!oResp || oResp.result != 0) {
                 return oResp;
             }
-            oResp = toNative(oResp);
         }
     }
-    
-    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either <i>" + oResp.object.publicPort + "</i> port (for external access from wherever in the Internet) or <i>1883</i> port (for connecting within internal Plaform network)."
+
+    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through either<ul><li> <i>" + oResp.object.publicPort + "</i> port (for external access from wherever in the Internet)</li><li> or <i>1883</i> port (for connecting within internal Plaform network).</li></ul>";
 } else {
-    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through <i>1883</i> port (for connecting within internal Plaform network).<br>Jelastic Endpoints are limited by your quotas. So external access from wherever in the Internet is denied. Please contact to support or upgrade account to increase this possibility.";
+    sSuccessText = "To access your Mosquitto MQTT server, refer to the <b>${env.domain}</b> domain name through <i>1883</i> port (for connecting within internal Plaform network).<br><br>Jelastic Endpoints are limited by your quotas. So external access from wherever in the Internet is denied. Please contact to support or upgrade account to increase this possibility. <br><br>After that add Endpoints to your environment. More info <a href=\'https://docs.jelastic.com//endpoints\'>here</a>";
 }
 
-
 return {
-    result: 0,
-    onAfterReturn: {
-        type: "success",
-        message: sSuccessText,
-        email: sSuccessText
-    }
+    result: "success",
+    message: sSuccessText,
+    email: sSuccessText
 };
-
-return oScripting.eval({
-    script : "InstallApp",
-    targetAppid : APPID,
-    manifest : toJSON({
-        "jpsType" : "update",
-        "application" : {
-            "id": "Mosquitto",
-            "name": "Mosquitto",
-            "success": {
-                "email": sSuccessText
-            }
-        }
-    })
-});
